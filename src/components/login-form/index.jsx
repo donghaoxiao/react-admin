@@ -2,12 +2,15 @@ import React,{Component} from 'react'
 import {
   Form, Icon, Input, Button,message
 } from 'antd';
+
+
+import PropTypes from 'prop-types'
 const {Item}=Form
 
-
-
  class FormLogin extends Component{
-
+   static propTypes={
+     login:PropTypes.func.isRequired
+   }
    changePassword=(rule,value,callback)=>{
     if(!value){
       callback('用户密码不能为空')
@@ -27,7 +30,8 @@ const {Item}=Form
      const {validateFields,resetFields}=this.props.form
      validateFields((error,values)=>{
        if(!error){
-
+         const {username,password}=values
+          this.props.login(username,password)
        }else {
          resetFields(['password']);
        const err= Object.values(error).reduce((prev,curr)=> prev+curr.errors[0].message,'');

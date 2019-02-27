@@ -8,7 +8,7 @@ export default class App extends Component{
   render(){
     return<Switch>
       <Route path='/login'component={Login}/>
-      {/*<Route path='/'component={Admin}/>*/}
+      <Route path='/'component={Admin}/>
     </Switch>
   }
 }
