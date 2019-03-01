@@ -4,7 +4,8 @@ import logo from '../../assets/images/logo.png'
 import './index.less'
 import FormLogin from '../../components/login-form/index'
 import {reqLogin} from '../../api/ajax/index'
-
+import {setItem}from '../../utils/storageUtils'
+import MemoryUtils from '../../utils/memoryUtils'
 
 export default class Login extends Component{
   state={
@@ -12,8 +13,11 @@ export default class Login extends Component{
   }
   login=async(username,password)=>{
     const result=await reqLogin(username,password)
-
     if(result.status===0){
+      //保存用户输入的信息
+      setItem(result.data)
+      MemoryUtils.user = result.data;
+      console.log(result.data)
       //跳转到admin页面
       this.props.history.replace('/')
 
@@ -22,7 +26,6 @@ export default class Login extends Component{
          errmsg:'账号名或者密码输入错误，请重新输入'
        })
     }
-    console.log(result.status)
   }
   render(){
     const {errmsg}=this.state
